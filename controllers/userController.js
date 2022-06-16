@@ -1,4 +1,4 @@
-const Users = require('./User')
+const Users = require('../models/User')
 //Gestion de usuarios
 const User = {
     get: async (req, res) => {

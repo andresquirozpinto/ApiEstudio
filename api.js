@@ -4,8 +4,8 @@ const express = require('express')
 //express
 const app = express()
 //llamamos al controlador, indicamos importar algo de nuestro proyecto y NO un modulo
-const user = require('./userController')
-const producto = require('./productoController')
+const user = require('./controllers/userController')
+const producto = require('./controllers/productoController')
 //conexion
 const mongoose = require('mongoose')
 
@@ -61,7 +61,7 @@ app.get("/", (req ,res) =>{
     //enviamos archivo html a nuestro usuario
     //dirname indica a sendfile donde nos encontramos, middleware de express
     console.log(__dirname)
-    res.sendFile(`${__dirname}/producto.html`)
+    res.sendFile(`${__dirname}/index.html`)
 })
 
 //Controladores de paginas no encontradas (metodos), * para todas las rutas antes que yo
