@@ -2,19 +2,27 @@
 const loadInitialTemplate = () => {
     //creamos html
     const template = `
+    
     <h1>Usuarios</h1>
-    <form id="user-form">
-        <div>
-            <label>Nombre</label>
-            <input type="text" name="name">
+    <form class="form-group" id="user-form">
+        <div class="row">
+            <div class="col-12">
+                <div class=" form-group mt-2">
+                    <label>Nombre</label>
+                    <input class="form-control" type="text" name="name">
+                </div>
+                <div class="mt-2">
+                    <label>LastName</label>
+                    <input class="form-control" type="text" name="lastname">
+                </div>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </div>
         </div>
-        <div>
-            <label>LastName</label>
-            <input type="text" name="lastname">
-        </div>
-        <button type="submit">Enviar</button>
     </form>
-    <ul id="user-list"></ul>
+
+    <div class="col-6">
+        <ul id="user-list" class="list-group"></ul>
+    </div>
     `
     //guardamos en el body las etiquetas
     //buscamos por etiqueta
@@ -32,8 +40,8 @@ const getUsers = async () => {
     console.log(users)
     //igual a funcion que recibe un usuario
     const template = user => `
-    <li>
-    ${user.name} ${user.lastname} <button data-id="${user._id}">Eliminar</button>
+    <li class="list-group-item">
+    ${user.name} ${user.lastname} <button class="btn btn-danger" data-id="${user._id}">Eliminar</button>
     </li>
     `
     const userList = document.getElementById('user-list')
@@ -81,6 +89,30 @@ const addFormListener = () => {
             }
         })
         //limpiando formulario (todos)
+        userForm.reset()
+        getUsers()
+    }
+}
+
+const updateFormListener = () => {
+    const userForm = document.getElementById('user-form')
+
+    userForm.onsubmit = async (e) => {
+
+        e.preventDefault()
+
+        const formData = new FormData(userForm)
+
+        const data = Object.fromEntries(formData.entries())
+        console.log(data)
+        /*await fetch('/users', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })*/
+        //limpiar formulario, y dibujar datos
         userForm.reset()
         getUsers()
     }

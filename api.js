@@ -56,6 +56,7 @@ app.delete('/productos/:id', producto.remove)
 
 //agregar carpeta y entrar a ella, crear archivos necesarios (main.js)
 app.use(express.static('static'))
+app.use(express.static('public'))
 
 app.get("/", (req ,res) =>{
     //enviamos archivo html a nuestro usuario
