@@ -9,7 +9,7 @@ const loadInitialTemplate = () => {
             <div class="col-12">
                 <div class=" form-group mt-2">
                     <label>Nombre</label>
-                    <input class="form-control" type="text" name="name">
+                    <input class="form-control" type="text" id="nombre" name="name">
                 </div>
                 <div class="mt-2">
                     <label>LastName</label>
@@ -32,6 +32,21 @@ const loadInitialTemplate = () => {
     //asignar html dentro de la etiqueta de body, y le pasamos la etiqueta a la plantilla que creamos
     //body.innerHTML = template
     seccionFormulario.innerHTML = template
+
+}
+
+const testFuncionAgregar = async () => {
+    //interactuar con html
+    const userForm = document.getElementById('user-form')
+    const txtNombre = document.getElementsByName('name')
+    const txtLastName = document.getElementsByName('lastname')
+
+    /*if(txtNombre.value==="" || txtLastName.value===""){
+        alert('campos vacios')
+    } else {
+        alert('campos con datos')
+    }*/
+    
 }
 //funcion para traer los datos a dibujar
 const getUsers = async () => {
@@ -82,8 +97,7 @@ const addFormListener = () => {
         //formData tiene una funcion que devuelve un iterador, entries()
         const data = Object.fromEntries(formData.entries())
         console.log(data)
-        //mandamos los datos a la api
-        await fetch('/users', {
+        await fetch('/productos', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
