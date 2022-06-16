@@ -26,10 +26,12 @@ const loadInitialTemplate = () => {
     `
     //guardamos en el body las etiquetas
     //buscamos por etiqueta
-    //metodo devulve un listado, agregamos acceder al primer indice de este arreglo
-    const body = document.getElementsByTagName('body')[0]
+    //metodo devulve un listado, agregamos acceder al primer indice de este arreglo, es necesario cuando se usa etiqueta en general
+    //const body = document.getElementsByTagName('main')[0]
+    const seccionFormulario = document.getElementById('seccion-formulario')
     //asignar html dentro de la etiqueta de body, y le pasamos la etiqueta a la plantilla que creamos
-    body.innerHTML = template
+    //body.innerHTML = template
+    seccionFormulario.innerHTML = template
 }
 //funcion para traer los datos a dibujar
 const getUsers = async () => {
