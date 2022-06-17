@@ -27,47 +27,43 @@ const cargarElementosPlantilla = () => {
 
 }
 
-const testFuncionAgregar = async () => {
-    //interactuar con html
-    const userForm = document.getElementById('user-form')
-    const txtNombre = document.getElementsByName('name')
-    const txtLastName = document.getElementsByName('lastname')
-}
-
 const cargarDatos = async () => {
-    const response = await fetch('/users')
-    const usuarios = await response.json()
-    console.log(usuarios)
+    const response = await fetch('/cuentas-usuarios')
+    const cuentasUsuarios = await response.json()
+    console.log(cuentasUsuarios)
 
-    const template = usuario => `
+    const template = cuentaUsuario => `
     <li class="list-group-item">
-    ${usuario.name} ${usuario.lastname} <button class="btn btn-danger" data-delete-id="${usuario._id}">Eliminar</button> <button class="btn btn-success" data-edit-id="${usuario._id}">Editar</button>
+    ${cuentaUsuario.nombre} ${cuentaUsuario.apellido} <button class="btn btn-danger" data-delete-id="${cuentaUsuario._id}">Eliminar</button> <button class="btn btn-success" data-edit-id="${cuentaUsuario._id}">Editar</button>
     </li>
     `
-    const userList = document.getElementById('user-list')
+    const listaCuentasUsuarios = document.getElementById('user-list')
     //user es un elemento quue estaremos iterando, la funcion que le pasamos se ejecutara tantas veces como elementos tenemos dentro del arreglo(evita el for)
-    userList.innerHTML = usuarios.map(usuario => template(usuario)).join('')
+    listaCuentasUsuarios.innerHTML = cuentasUsuarios.map(cuentaUsuario => template(cuentaUsuario)).join('')
     /*const todos = users.map(user => {
 
     })*/
 
-    usuarios.forEach(usuario => {
-        const deleteNodoUsuario = document.querySelector(`[data-delete-id="${usuario._id}"]`)
-        const updateNodoUsuario = document.querySelector(`[data-edit-id="${usuario._id}"]`)
+    //respuesta GET
+    cuentasUsuarios.forEach(cuentaUsuario => {
+        
+        const deleteNodoUsuario = document.querySelector(`[data-delete-id="${cuentaUsuario._id}"]`)
+        const updateNodoUsuario = document.querySelector(`[data-edit-id="${cuentaUsuario._id}"]`)
 
         deleteNodoUsuario.onclick = async e => {
-            await fetch(`/users${user._id}`, {
+            await fetch(`/cuentas-usuarios/${cuentaUsuario._id}`, {
                 method: 'DELETE',
             })
-            userNode.parentNode.remove()
+            deleteNodoUsuario.parentNode.remove()
+            console.log(cuentaUsuario._id)
             alert('Registro eliminado correctamente')
         }
 
         updateNodoUsuario.onclick = async e => {
             const inputNombre = document.getElementById('name')
             const inputApellido = document.getElementById('lastname')
-            inputNombre.value = usuario.name
-            inputApellido.value = usuario.lastname
+            inputNombre.value = cuentaUsuario.nombre
+            inputApellido.value = cuentaUsuario.apellido
 
             const formularioUsuario = document.getElementById('user-form')
             formularioUsuario.onsubmit = async (e) => {
@@ -75,8 +71,8 @@ const cargarDatos = async () => {
                 const formData = new FormData(formularioUsuario)
                 const data = Object.fromEntries(formData.entries())
                 console.log(data)
-                if (usuario._id != null) {
-                    await fetch(`/users/${usuario._id}`, {
+                if (cuentaUsuario._id != null) {
+                    await fetch(`/cuentas-usuarios/${cuentaUsuario._id}`, {
                         method: 'PUT',
                         body: JSON.stringify(data),
                         headers: {
@@ -91,7 +87,6 @@ const cargarDatos = async () => {
                 cargarDatos()
             }
         }
-
     })
 
 
@@ -104,7 +99,7 @@ const agregarDatosFormulario = () => {
         const formData = new FormData(formularioUsuario)
         const data = Object.fromEntries(formData.entries())
         console.log(data)
-        await fetch('/users', {
+        await fetch('/cuentas-usuarios', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

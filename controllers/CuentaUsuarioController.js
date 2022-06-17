@@ -1,36 +1,36 @@
-const Users = require('../models/User')
+const CuentasUsuarios = require('../models/CuentaUsuario')
 //Gestion de usuarios
-const User = {
+const CuentaUsuario = {
     get: async (req, res) => {
         //en este caso comno es especifico lo sacamos de params, creamos objeto
         const {id} = req.params
-        const user = await Users.findOne({_id: id})
-        res.status(200).send(user)
+        const cuentaUsuario = await CuentasUsuarios.findOne({_id: id})
+        res.status(200).send(cuentaUsuario)
     },
     list: async (req, res) => {
-        const users = await Users.find()
-        res.status(200).send(users)
+        const cuentaUsuario = await CuentasUsuarios.find()
+        res.status(200).send(cuentaUsuario)
     },
     create: async (req, res) => {
         //req.body los datos de las peticiones post vienen en el body, NO SE PUEDE ENVIAR ASI, se debe agregar configuracion en la app principal
-        const user = new Users(req.body)
-        const usuarioGuardado = await user.save()
-        res.status(201).send(usuarioGuardado._id)
+        const cuentaUsuario = new CuentasUsuarios(req.body)
+        const cuentaUsuarioGuardado = await cuentaUsuario.save()
+        res.status(201).send(cuentaUsuarioGuardado._id)
     },
     update: async (req, res) => {
         const {id} = req.params
-        const user = await Users.findOne({_id: id})
+        const cuentaUsuario = await CuentasUsuarios.findOne({_id: id})
         //buscamos al ujsuario que venmga dentgro del body de la peticion, parametro 1, usuario encontrado, parametro 2, peticion del body que viene desde el cliente
-        Object.assign(user, req.body)
+        Object.assign(cuentaUsuario, req.body)
         //guardamos
-        await user.save()
+        await cuentaUsuario.save()
         res.sendStatus(204)
     },
     remove: async (req, res) => {
         const {id} = req.params
-        const user = await Users.findOne({_id: id})
-        if(user){
-            user.remove()
+        const cuentaUsuario = await CuentasUsuarios.findOne({_id: id})
+        if(cuentaUsuario){
+            cuentaUsuario.remove()
         }
         res.sendStatus(204)
     }
@@ -38,4 +38,4 @@ const User = {
 
 //exportar objeto de Usuario
 //cuando importemos este archivo, recibimos por defecto lo que esta aca en la linea siguiente
-module.exports = User
+module.exports = CuentaUsuario
